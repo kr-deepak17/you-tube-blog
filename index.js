@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const userRoute=require("./routes/user");
 
+
 const mongoose=require("mongoose");
 mongoose
         .connect("mongodb://localhost:27017/blogify")
