@@ -6,6 +6,9 @@ const express = require('express');
 const userRoute=require("./routes/user");
 const blogRoute=require("./routes/blog");
 
+const Blog=require("./models/blog");
+
+
 const cookieParser=require("cookie-parser");
 
 const{checkForAuthenticationCookie,}=require("./middlewares/auth");
@@ -28,10 +31,20 @@ app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie("token"))
 
-app.get("/",(req,res)=>{
+// app.use(express.static(path.resolve("./public")));
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/",async(req,res)=>{
+    if (!req.user) {
+        return res.redirect("/user/signin");
+    }
+    const allBlogs=(await Blog.find({}));
     res.render('home',{
         user:req.user,
-    });
+        blogs:allBlogs,
+
+    })
+
 })
 
 app.use("/user",userRoute);

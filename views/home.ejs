@@ -8,7 +8,22 @@
 </head>
 <body>
     <%- include('./partials/nav') %>
-        <%= JSON.stringify(user) %>
+        <div class="container mt-3">
+            <% blogs.forEach(blog => { %>
+
+                <section class="card" style="max-width: 320px">
+                <img src="<%= blog.coverImageURL %>" class="card-img-top">
+                <div class="card-body">
+                    <h4 class="card-title"> <%= blog.title %></h4>
+                   
+                    <a href="/blog/<%=blog._id  %>" class="btn-solid theme-primary">View</a>
+                </div>
+                </section>
+             
+            <% }) %>
+
+
+        </div>
 
 
     <%- include('./partials/scripts') %>

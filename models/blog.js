@@ -1,5 +1,5 @@
 
-const { Schema } = require("mongoose");
+const { Schema,model } = require("mongoose");
 const{createTokenForUser,}=require("../services/authentication");
 const blogSchema=newSchema=new Schema({
     title:{
