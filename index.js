@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const userRoute=require("./routes/user");
+const cookieParser=require("cookie-parser");
 
 
 const mongoose=require("mongoose");
@@ -17,6 +18,8 @@ app.set("view engine","ejs");
 app.set('views',path.resolve("./views"));
 
 app.use(express.urlencoded({extended:false}));
+app.user(cookieParser);
+app.use('check')
 
 app.get("/",(req,res)=>{
     res.render('home');
