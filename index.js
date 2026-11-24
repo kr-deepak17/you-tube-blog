@@ -1,7 +1,14 @@
 const path = require('path');
 const express = require('express');
+
+
+
 const userRoute=require("./routes/user");
+const blogRoute=require("./routes/blog");
+
 const cookieParser=require("cookie-parser");
+
+const{checkForAuthenticationCookie,}=require("./middlewares/auth");
 
 
 const mongoose=require("mongoose");
@@ -18,12 +25,19 @@ app.set("view engine","ejs");
 app.set('views',path.resolve("./views"));
 
 app.use(express.urlencoded({extended:false}));
-app.user(cookieParser);
-app.use('check')
+app.use(cookieParser());
+app.use(checkForAuthenticationCookie("token"))
 
 app.get("/",(req,res)=>{
-    res.render('home');
+    res.render('home',{
+        user:req.user,
+    });
 })
+
 app.use("/user",userRoute);
+app.use("/blog",blogRoute);
+
+
+
 
 app.listen(PORT,()=>console.log("server started at PORT "+PORT));
